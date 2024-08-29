@@ -1,0 +1,150 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class ExpressionEvaluator {
+private:
+    static const int MAX_SIZE = 100; // Maximum size for the stack and arrays
+    int stack[MAX_SIZE]; // Stack for evaluating expressions
+    int top; // To keep track of the top of the stack
+    int operands[MAX_SIZE]; // Array to store operands (numbers)
+    char operators[MAX_SIZE]; // Array to store operators (+, -, *, etc.)
+    int operandCount; // Number of operands
+    int operatorCount; // Number of operators
+
+    bool isFull() {
+        return top == MAX_SIZE - 1; // Check if the stack is full
+    }
+
+    bool isEmpty() {
+        return top == -1; // Check if the stack is empty
+    }
+
+    void push(int ele) {
+        if (isFull()) {
+            cout << "Stack overflow\n"; // Error message if the stack is full
+        } else {
+            stack[++top] = ele; // Add the element to the stack
+        }
+    }
+
+    int pop() {
+        if (isEmpty()) {
+            cout << "Stack underflow\n"; // Error message if the stack is empty
+            return -1; // Return -1 to indicate an error
+        } else {
+            return stack[top--]; // Remove and return the top element from the stack
+        }
+    }
+
+    int evaluate(int a, int b, char op) {
+        switch (op) {
+            case '+': return a + b; // Add two numbers
+            case '-': return a - b; // Subtract two numbers
+            case '*': return a * b; // Multiply two numbers
+            case '/': return a / b; // Divide two numbers
+            case '^': return pow(a, b); // Raise a to the power of b
+            default: return 0; // Default case for unknown operators
+        }
+    }
+
+    void printResults() {
+        if (!isEmpty()) {
+            cout << "The evaluated result is: " << stack[top] << endl; // Show the result
+        } else {
+            cout << "Invalid expression or result not found.\n"; // Error message if there's an issue
+        }
+    }
+
+public:
+    ExpressionEvaluator() : top(-1), operandCount(0), operatorCount(0) {}
+
+    void processExpression() {
+        int num;
+        char op;
+        int choice;
+        cout << "Enter the number of elements in the expression:\n";
+        int length;
+        cin >> length;
+
+        cout << "Enter the expression:\n";
+        for (int i = 0; i < length; ++i) {
+            cout << "1. If digit\n2. If operator\n3. Exit\n";
+            cin >> choice;
+
+            switch (choice) {
+                case 1:
+                    cout << "Please enter digit: ";
+                    cin >> num; // Read the number
+                    operands[operandCount++] = num; // Store the number in the operands array
+                    operators[operatorCount++] = '0'; // '0' indicates an operand
+                    break;
+                case 2:
+                    cout << "Please enter operator: ";
+                    cin >> op; // Read the operator
+                    operators[operatorCount++] = op; // Store the operator in the operators array
+                    operands[operandCount++] = -1; // -1 indicates an operator
+                    break;
+                case 3:
+                    goto endInput; // Exit the loop
+            }
+        }
+        endInput:
+
+        cout << "Operands: ";
+        for (int j = 0; j < operandCount; ++j) {
+            if (operands[j] != -1) cout << operands[j] << " "; // Print operands
+        }
+        cout << "\nOperators: ";
+        for (int j = 0; j < operatorCount; ++j) {
+            if (operators[j] != '0') cout << operators[j] << " "; // Print operators
+        }
+        cout << endl;
+
+        cout << "Enter choice of evaluation:\n";
+        cout << "1. Postfix\n2. Prefix\n";
+        cin >> choice;
+
+        if (choice == 1) {
+            evaluatePostfix(); // Evaluate the postfix expression
+        } else if (choice == 2) {
+            evaluatePrefix(); // Evaluate the prefix expression
+        } else {
+            cout << "Invalid choice.\n"; // Error message for invalid choice
+        }
+    }
+
+    void evaluatePostfix() {
+        for (int i = 0; i < operandCount; ++i) {
+            if (operands[i] != -1) {
+                push(operands[i]); // Push operands onto the stack
+            } else if (operators[i] != '0') {
+                int a = pop(); // Pop the top element from the stack
+                int b = pop(); // Pop the next top element from the stack
+                int result = evaluate(b, a, operators[i]); // Evaluate the operation
+                push(result); // Push the result back onto the stack
+            }
+        }
+        printResults(); // Show the result
+    }
+
+    void evaluatePrefix() {
+        for (int i = operandCount - 1; i >= 0; --i) {
+            if (operands[i] != -1) {
+                push(operands[i]); // Push operands onto the stack
+            } else if (operators[i] != '0') {
+                int a = pop(); // Pop the top element from the stack
+                int b = pop(); // Pop the next top element from the stack
+                int result = evaluate(a, b, operators[i]); // Evaluate the operation
+                push(result); // Push the result back onto the stack
+            }
+        }
+        printResults(); // Show the result
+    }
+};
+
+int main() {
+    ExpressionEvaluator evaluator;
+    evaluator.processExpression(); // Start the process
+    return 0;
+}

@@ -1,0 +1,41 @@
+import java.util.Scanner;
+import java.lang.String;
+import java.util.Arrays;
+class Rep{
+   String og;
+   char re;
+Rep(String s,char r){
+    og=s;
+    re=r;
+}
+void repeat(){
+int [] count=new int[256];
+//int count=0;
+for(int i=0;i<og.length();i++){
+char c=og.charAt(i);
+count[c]++;
+}
+char []result=new char[og.length()];
+for(int i=0;i<og.length();i++){
+    char c=og.charAt(i);
+    if(count[c]>1){
+        result[i]=re;
+    }
+    else{
+        result[i]=c;
+    }
+}
+    System.out.println(new String(result));
+}}
+public class Repeat {
+    public static void main(String[] args) {
+        Scanner s=new Scanner(System.in);
+        System.out.println("enter the main string");
+        String og=s.nextLine();
+        System.out.println("enter the char to be replaced");
+        String re=s.nextLine();
+        Rep rep=new Rep(og,re.charAt(0));
+        rep.repeat();
+
+    }
+}

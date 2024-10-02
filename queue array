@@ -1,0 +1,68 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+class Q{
+    private:
+    int queue[100];
+    int rear=-1;
+    int front=-1;
+    bool isFull(){
+        return rear==99;
+    }
+    bool isEmpty(){
+        return front==-1;
+    }
+    public:
+    void enqueue(int a){
+        if(isFull()){
+            cout<<"queue is full"<<endl;
+        }
+        else if(isEmpty()){
+            front =rear=0;
+            queue[rear]=a;
+        }
+        else{
+            queue[++rear]=a;
+        }
+    }
+    void dequeue(){
+        if(isEmpty()){
+            cout<<"queue is empty"<<endl;
+        }
+        else if(front==rear){
+            cout<<"dequed number is "<<queue[front]<<endl;
+            front=rear=-1;
+        }
+        else{
+            cout<<"dequed number after is "<<queue[front]<<endl;
+            front++;
+        }
+        }
+        void display()
+{   
+    if(isEmpty()){
+        cout<<"queue is e,pty"<<endl;
+}
+else{
+    for(int i=front;i<=rear;i++){
+        cout<<queue[i]<< " ";
+    }
+    cout<<endl;
+}
+}
+void size(){
+    cout<<"size is "<<(rear-front)+1;
+}
+};
+int main(){
+    Q q;
+    q.enqueue(1);
+     q.enqueue(2);
+      q.enqueue(3);
+       q.enqueue(4);
+       q.display();
+       q.dequeue();
+       q.display();
+       q.size();
+       return 0;
+}

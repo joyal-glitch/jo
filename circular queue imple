@@ -1,0 +1,70 @@
+
+#include <iostream>
+using namespace std;
+class Q{
+    private:
+    int queue[100];
+    int rear=-1;
+    int front=-1;
+    bool isEmpty(){
+        return front==-1;
+    }
+    bool isFull(){
+        return ((rear+1)%100)==front;
+    }
+    public:
+    void insert(int c){
+        if(isFull()){
+            cout<<"queue is full"<<endl;
+        }
+        else if (isEmpty()) {
+            front = rear = 0;
+            queue[rear]=c;
+        } else {
+            rear = (rear + 1) % 100;
+                queue[rear] = c;
+        }
+    }
+        void deleteChar(){
+            if(isEmpty()){
+                cout<<"queue is empty"<<endl;
+            }
+            else if(front==rear){
+                cout<<"dequed char is "<<queue[front]<<endl;
+                front=rear=-1;
+            }
+            else{
+                cout<<"deleted char is "<<queue[front]<<endl;
+                 front=(front+1)%100;
+            }
+        }
+       void display(){
+        if(isEmpty())
+                cout<<"The queue is empty"<<endl;
+        else
+        {
+                int i=front;
+                cout<<"The elements of the queue are: "<<endl;
+                while(i!=rear)
+                {
+                        cout<<queue[i]<<" ";
+                        i=((i+1)%100);
+                }
+                cout<<queue[rear];
+                cout<<endl;
+        }
+}
+    };
+    int main(){
+        Q q;
+        q.insert(1);
+        q.insert(2);
+        q.insert(3);
+        q.insert(4);
+        q.display();
+        q.deleteChar();
+        q.display();
+        q.insert(5);
+        q.display();
+        return 0;
+    }

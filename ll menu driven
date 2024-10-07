@@ -108,7 +108,6 @@ void display() {
     node* temp = head;
     if (temp == NULL) {
         cout << "The list is empty." << endl;
-        return;
     }
     cout << "List: ";
     while (temp != NULL) {

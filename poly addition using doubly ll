@@ -1,0 +1,88 @@
+#include<iostream>
+using namespace std;
+struct node{
+    int pwe;
+    int coef;
+    node* pre;
+    node* next;
+};
+class Ll{
+    public:
+node* head=NULL;
+void poly(int coef,int pwe){
+    node* newnode=new struct node;
+    newnode->pwe=pwe;
+    newnode->coef=coef;
+    newnode->pre=NULL;
+    newnode->next=NULL;
+    if(head==NULL){
+        head=newnode;
+    }
+    else{
+        node* temp=head;
+        newnode->next=temp;
+        temp->pre=newnode;
+        head=newnode;
+    }}
+    Ll addPoly(Ll &l1, Ll &l2){
+      Ll result;
+      node* n1=l1.head;
+      node* n2=l2.head;
+      while(n1!=NULL && n2!=NULL){
+          if(n1->pwe > n2->pwe){
+              result.poly(n1->coef,n1->pwe);
+          }
+          else if(n2->pwe > n1->pwe){
+              result.poly(n2->coef,n2->pwe);
+          }
+          else{
+              int sum=n1->pwe+n2->pwe;
+              if(sum!=0){
+              result.poly(sum,n1->pwe);
+          }}
+                    n1 = n1->next;
+                    n2 = n2->next;
+                }
+                while(n1!=NULL){
+                      result.poly(n1->coef, n1->pwe);
+                      n1 = n1->next;
+            }
+            while(n2 != NULL) {
+                result.poly(n2->coef, n2->pwe);
+                n2 = n2->next;
+            }
+            return result;
+        }
+          void print() {
+            node* temp = head;
+            while(temp != NULL) {
+                cout << temp->coef << "x^" << temp->pwe << " + ";
+                temp = temp->next;
+            }
+            cout << endl;
+        }
+};
+int main(){
+    Ll l1,l2;
+    int coef,pwe;
+    int n1,n2;
+    cout<<"enter the size of first poly"<<endl;
+    cin>>n1;
+    for(int i=1;i<=n1;i++){
+        cout<<"enter the coef and power"<<endl;
+        cin>>coef>>pwe;
+        l1.poly(coef,pwe);
+    }
+       cout<<"enter the size of poly 2"<<endl;
+        cin>>n2;
+        for(int i=1;i<=n2;i++)
+        {
+         cout<<"enter the coef,power"<<endl;
+                cin>>coef>>pwe;
+                l2.poly(coef,pwe);
+        }
+        cout<<"The resultant polynomial is"<<endl;
+        Ll result=result.addPoly(l1,l2);
+        result.print();
+         return 0;
+}

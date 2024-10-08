@@ -36,7 +36,7 @@ void poly(int coef,int pwe){
               result.poly(n2->coef,n2->pwe);
           }
           else{
-              int sum=n1->pwe+n2->pwe;
+              int sum=n1->coef+n2->coef;
               if(sum!=0){
               result.poly(sum,n1->pwe);
           }}
